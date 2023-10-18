@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 const username = 'test';
 const usermail = 'test@test.io';
@@ -28,7 +28,7 @@ const db = {
 
 describe('UserService', () => {
   let service: UserService;
-  let prisma: PrismaService
+  let prisma: PrismaService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -50,6 +50,35 @@ describe('UserService', () => {
         name: username,
         email: usermail,
         password: "test123"
+      })
+    )
+  });
+
+  it('should find one user', async () => {
+    expect(
+      service.user({
+        id: user1
+      })
+    )
+  });
+
+  it('should delete one user', async () => {
+    expect(
+      service.deleteUser({
+        id: user2
+      })
+    )
+  });
+
+  it('should update one user', async () => {
+    expect(
+      service.updateUser({
+        where: {
+          id:  user1
+        },
+        data: {
+          password: "test456"
+        }
       })
     )
   });

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User, Prisma as db } from '@prisma/client';
 
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class UserService {
@@ -23,8 +23,8 @@ export class UserService {
     where: db.UserWhereUniqueInput;
     data: db.UserUpdateInput;
   }): Promise<User> {
-    const { data, where } = params;
-    return this.updateUser({
+    const { where, data } = params;
+    return this.db.user.update({
       data,
       where,
     });
