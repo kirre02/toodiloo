@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+      "api:start": "pnpm -F toodiloo-api build && pnpm -F toodiloo-api start:prod",
+      "api:dev": "pnpm -F toodiloo-api start:dev"
     },
     "keywords": [],
     "author": "",
