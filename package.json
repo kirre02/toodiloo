@@ -5,7 +5,8 @@
     "main": "index.js",
     "scripts": {
       "api:start": "pnpm -F toodiloo-api build && pnpm -F toodiloo-api start:prod",
-      "api:dev": "pnpm -F toodiloo-api start:dev"
+      "api:dev": "pnpm -F toodiloo-api start:dev",
+      "migrate":"pnpm -F toodiloo-api exec prisma migrate dev"
     },
     "keywords": [],
     "author": "",
