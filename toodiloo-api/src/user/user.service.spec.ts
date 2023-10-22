@@ -8,7 +8,7 @@ const user1 = 1;
 const user2 = 2;
 
 const userArray = [
-  { username: 'Erik', email:'kirre@test.io', id: user1 },
+  { username: 'Erik', email: 'kirre@test.io', id: user1 },
   { username: 'Fabricio', email: 'fabri@test.io', id: user2 },
 ];
 
@@ -33,13 +33,14 @@ describe('UserService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        UserService, {
+        UserService,
+        {
           provide: PrismaService,
           useValue: db,
-        }
+        },
       ],
     }).compile();
-  
+
     service = module.get<UserService>(UserService);
     prisma = module.get<PrismaService>(PrismaService);
   });
@@ -49,37 +50,37 @@ describe('UserService', () => {
       service.createUser({
         name: username,
         email: usermail,
-        password: "test123"
-      })
-    )
+        password: 'test123',
+      }),
+    );
   });
 
   it('should find one user', async () => {
     expect(
       service.user({
-        id: user1
-      })
-    )
+        id: user1,
+      }),
+    );
   });
 
   it('should delete one user', async () => {
     expect(
       service.deleteUser({
-        id: user2
-      })
-    )
+        id: user2,
+      }),
+    );
   });
 
   it('should update one user', async () => {
     expect(
       service.updateUser({
         where: {
-          id:  user1
+          id: user1,
         },
         data: {
-          password: "test456"
-        }
-      })
-    )
+          password: 'test456',
+        },
+      }),
+    );
   });
 });
