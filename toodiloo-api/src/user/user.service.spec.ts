@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { PasswordService } from '../auth/password/password.service';
 
 const username = 'test';
 const usermail = 'test@test.io';
@@ -34,6 +35,7 @@ describe('UserService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UserService,
+        PasswordService,
         {
           provide: PrismaService,
           useValue: db,
@@ -57,7 +59,7 @@ describe('UserService', () => {
 
   it('should find one user', async () => {
     expect(
-      service.user({
+      service.getUser({
         id: user1,
       }),
     );

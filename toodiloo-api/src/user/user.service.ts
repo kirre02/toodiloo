@@ -2,33 +2,38 @@ import { Injectable, forwardRef, Inject } from '@nestjs/common';
 import { User, Prisma as db } from '@prisma/client';
 
 import { PrismaService } from '../prisma/prisma.service';
-import { PasswordService } from 'src/auth/password/password.service';
+import { PasswordService } from '../auth/password/password.service';
 
 @Injectable()
 export class UserService {
-  constructor(private db: PrismaService,
-    @Inject(forwardRef(() => PasswordService)) 
-    private passwordService: PasswordService) {}
+  constructor(
+    private db: PrismaService,
+    @Inject(forwardRef(() => PasswordService))
+    private passwordService: PasswordService,
+  ) {}
 
-  async user(uniqeUser: db.UserWhereUniqueInput): Promise<User | null> {
-    return this.db.user.findUnique({
+  async getUser(uniqeUser: db.UserWhereUniqueInput) {
+    return await this.db.user.findUnique({
       where: uniqeUser,
     });
   }
 
   async createUser(data: db.UserCreateInput) {
     const encrpytPassword = await this.passwordService.hashPassword(
-      data.password
-    )
+      data.password,
+    );
 
-    const {password, ...user} = await this.db.user.create({
+    const { password, ...user } = await this.db.user.create({
       data: {
         ...data,
         password: encrpytPassword,
-      }
-    })
+      },
+    });
 
-    return user.name;
+    return {
+      msg: 'Successfully registered',
+      username: user.name,
+    };
   }
 
   async updateUser(params: {
