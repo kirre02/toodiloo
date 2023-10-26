@@ -1,15 +1,26 @@
 {
     "name": "toodiloo",
     "version": "0.1.0",
-    "description": "",
-    "main": "index.js",
     "scripts": {
-      "api:start": "pnpm -F toodiloo-api build && pnpm -F toodiloo-api start:prod",
+      "api:start": "pnpm -F toodiloo-api start:prod",
       "api:dev": "pnpm -F toodiloo-api start:dev",
-      "dev:migrate":"pnpm -F toodiloo-api exec prisma migrate dev",
-      "studio":"pnpm -F toodiloo-api exec prisma studio"
+      "app:start": "echo ❌ No client app yet",
+      "app:dev": "echo ❌ No client app yet",
+      "db:start": "docker compose up -d",
+      "db:stop": "docker compose stop",
+      "db:delete": "docker compose down"
     },
-    "keywords": [],
-    "author": "",
+    "keywords": ["todo app"],
+    "contributors": [
+      {
+        "name": "Erik",
+        "url": "https://github.com/kirre02"
+      },
+      {
+        "name": "Fabricio",
+        "email": "contact@fabricioflores.se",
+        "url": "https://github.com/rfabricioflores"
+      }
+    ],
     "license": ""
   }
