@@ -1,1 +1,4 @@
 .direnv
+.env
+postgresData
+node_modules
