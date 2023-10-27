@@ -1,8 +1,9 @@
-import { Injectable, forwardRef, Inject } from '@nestjs/common';
-import { User, Prisma as db } from '@prisma/client';
+import { Injectable, forwardRef, Inject} from '@nestjs/common';
+import  {User, Prisma as db} from '@prisma/client';
 
 import { PrismaService } from '../prisma/prisma.service';
 import { PasswordService } from '../auth/password/password.service';
+import errorHandler from 'src/util/errorHandler';
 
 @Injectable()
 export class UserService {
@@ -12,44 +13,64 @@ export class UserService {
     private passwordService: PasswordService,
   ) {}
 
-  async getUser(uniqeUser: db.UserWhereUniqueInput) {
+  async getUser(uniqeUser: db.UserWhereUniqueInput): Promise<User> {
     return await this.db.user.findUnique({
       where: uniqeUser,
     });
   }
 
   async createUser(data: db.UserCreateInput) {
-    const encrpytPassword = await this.passwordService.hashPassword(
-      data.password,
-    );
+    try {
+      const encrpytPassword = await this.passwordService.hashPassword(data.password);
 
-    const { password, ...user } = await this.db.user.create({
-      data: {
-        ...data,
-        password: encrpytPassword,
-      },
-    });
+      const user = await this.db.user.create({
+        data: {
+          ...data,
+          password: encrpytPassword,
+        },
+      });
+      
+      return {
+        msg: "Successfully created user",
+        username: user.name,
+      };
+    } catch(e) {
+      errorHandler(e);
+    }
 
-    return {
-      msg: 'Successfully registered',
-      username: user.name,
-    };
   }
 
   async updateUser(params: {
     where: db.UserWhereUniqueInput;
     data: db.UserUpdateInput;
-  }): Promise<User> {
+  }) {
+    try {
     const { where, data } = params;
-    return this.db.user.update({
+    const user = await this.db.user.update({
       data,
       where,
     });
+
+    return {
+      msg:"Successfully updated user",
+      username: user.name
+    }
+  } catch(e) {
+    errorHandler(e);
+  }
   }
 
-  async deleteUser(where: db.UserWhereUniqueInput): Promise<User> {
-    return this.db.user.delete({
+  async deleteUser(where: db.UserWhereUniqueInput) {
+    try {
+    const user = await this.db.user.delete({
       where,
     });
+
+    return {
+      msg: `${user.name} has been deleted`,
+    }
+  } catch(e) {
+    errorHandler(e);
+  }
   }
 }
