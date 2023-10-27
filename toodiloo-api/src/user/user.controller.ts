@@ -25,7 +25,7 @@ export class UserController {
   @UseGuards(LocalAuthGuard)
   @Post('/login')
   login(@Request() req): any {
-    return { User: req.user, msg: 'User logged in' };
+    return { user: req.user, msg: 'User logged in' };
   }
 
   //Get / logout
