@@ -1,5 +1,9 @@
-function Nav() {
-  return <p>Home</p>;
+function Home() {
+  return (
+    <>
+      <p>Home</p>
+    </>
+  );
 }
 
-export default Nav;
+export default Home;
