@@ -7,7 +7,6 @@
     "esModuleInterop": true,
     "inlineSources": false,
     "isolatedModules": true,
-    "moduleResolution": "node",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "skipLibCheck": true,

@@ -10,7 +10,8 @@
       "app:dev": "echo ❌ No client app yet",
       "db:start": "docker compose up -d",
       "db:stop": "docker compose stop",
-      "db:delete": "docker compose down"
+      "db:delete": "docker compose down",
+      "web:dev": "pnpm -F toodiloo-web dev"
     },
     "keywords": ["todo app"],
     "contributors": [
