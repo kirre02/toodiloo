@@ -3,7 +3,7 @@ import  {User, Prisma as db} from '@prisma/client';
 
 import { PrismaService } from '../prisma/prisma.service';
 import { PasswordService } from '../auth/password/password.service';
-import errorHandler from 'src/util/errorHandler';
+import errorHandler from '../util/errorHandler';
 
 @Injectable()
 export class UserService {
