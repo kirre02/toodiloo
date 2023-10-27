@@ -3,6 +3,8 @@
     "version": "0.1.0",
     "scripts": {
       "api:start": "pnpm -F toodiloo-api start:prod",
+      "api:ci": "pnpm -F toodiloo-api prisma:generate && pnpm -F toodiloo-api test:e2e",
+      "api:test": "pnpm -F toodiloo-api test",
       "api:dev": "pnpm -F toodiloo-api start:dev",
       "app:start": "echo ❌ No client app yet",
       "app:dev": "echo ❌ No client app yet",
