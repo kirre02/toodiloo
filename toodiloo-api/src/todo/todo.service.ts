@@ -1,13 +1,15 @@
 import errorHandler from '../util/errorHandler';
 import { PrismaService } from '../prisma/prisma.service';
 import { Todo, Prisma as db } from '@prisma/client';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class TodoService {
   constructor(
     private db: PrismaService,
-  ) {}
+  ) { }
 
-  async get(uniqeTodo: db.TodoWhereUniqueInput ): Promise<Todo> {
+  async get(uniqeTodo: db.TodoWhereUniqueInput): Promise<Todo> {
     return await this.db.todo.findUnique({
       where: uniqeTodo,
     });
@@ -19,10 +21,10 @@ export class TodoService {
         data: data
       })
       return {
-        msg:"Successfully created todo",
+        msg: "Successfully created todo",
         todo: todo.title
       }
-    } catch(e) {
+    } catch (e) {
       errorHandler(e);
     }
   }
@@ -51,19 +53,19 @@ export class TodoService {
     data: db.TodoUpdateInput;
   }) {
     try {
-    const { where, data } = params;
-    const todo = await this.db.todo.update({
-      data,
-      where,
-    });
+      const { where, data } = params;
+      const todo = await this.db.todo.update({
+        data,
+        where,
+      });
 
-    return {
-      msg:"Successfully updated user",
-      title: todo.title
+      return {
+        msg: "Successfully updated user",
+        title: todo.title
+      }
+    } catch (e) {
+      errorHandler(e);
     }
-  } catch(e) {
-    errorHandler(e);
-  }
   }
 
   async delete(where: db.TodoWhereUniqueInput) {
@@ -76,7 +78,7 @@ export class TodoService {
         msg: "todo was deleted",
         todo: todo.title
       }
-    } catch(e){
+    } catch (e) {
       errorHandler(e)
     }
   }
